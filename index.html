@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>JSON2CSV</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700,800&display=swap');
+
+        html,
+        body {
+            font-family: Dosis;
+            font-weight: 200;
+        }
+
+        textarea {
+            font-family: monospace;
+        }
+    </style>
+</head>
+
+<body class="bg-blue-800 text-gray-800 py-16">
+
+    <div class="container mx-auto px-4" id="AppVue">
+
+        <h1 class="text-4xl text-center mb-16 text-white">Conversor de JSON para CSV</h1>
+
+        <!-- <pre class="text-white">{{table}}</pre> -->
+
+        <!-- card -->
+        <div class="bg-white rounded overflow-hidden shadow-lg p-4 mb-4">
+            <h2 class="text-xl text-center mb-4">JSON</h2>
+
+            <div class="form-group" :class="{'has-error': json.error}">
+                <textarea
+                    class="shadow appearance-none border rounded w-full h-32 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    v-model="json.value" :class="{'border-red-500 bg-red-200': json.error}"
+                    @keyup.prevent="convertToCsv()"></textarea>
+                <small class="text-red-500">{{json.error}}</small>
+            </div>
+        </div>
+        <!-- /card -->
+
+        <!-- card -->
+        <div class="bg-white rounded overflow-hidden shadow-lg p-4 mb-4">
+            <h2 class="text-xl text-center mb-4">CSV</h2>
+
+            <div class="form-group" :class="{'has-error': csv.error}">
+                <textarea
+                    class="shadow appearance-none border rounded w-full h-32 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    v-model="csv.value" :class="{'border-red-500 bg-red-200': csv.error}"
+                    @keyup.prevent="convertToJson()" readonly></textarea>
+                <small class="text-red-500">{{csv.error}}</small>
+            </div>
+        </div>
+        <!-- /card -->
+
+        <!-- card -->
+        <div class="bg-white rounded overflow-hidden shadow-lg p-4 mb-4">
+            <h2 class="text-xl text-center mb-4">Tabela</h2>
+
+            <div class="overflow-auto">
+                <table class="table-auto border w-full">
+                    <thead>
+                        <tr class="bg-gray-200">
+                            <th class="border px-4 py-2 text-left" v-for="header in table.header">{{header}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(row, i) in table.body" :class="{'bg-gray-100': i % 2 == 1}">
+                            <td class="border px-4 py-2 text-left" v-for="col in row">{{col}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /card -->
+
+        <footer class="fixed bottom-0 left-0 w-full py-2 bg-blue-900 text-white text-sm text-center">
+            <div class="container mx-auto">
+                Desenvolvido por <a href="http://leandromacedo.dev" class="underline">Leandro Macedo</a>.
+            </div>
+        </footer>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
