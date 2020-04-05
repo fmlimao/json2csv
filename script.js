@@ -2,11 +2,7 @@ var App = new Vue({
     el: '#AppVue',
     data: {
         json: {
-            value: `[
-  { "a": "A 1", "b": true, "c": "C 1", "f": "F 1" },
-  { "a": "A 2", "b": "B 2", "d": "D 2", "g": "G 2", "h": "H 2" },
-  { "a": "A 3", "b": 4, "e": "E 2", "f": "F 3", "h": "H 3", "i": "I 3" }
-]`,
+            value: '',
             error: '',
         },
         csv: {
@@ -18,6 +14,11 @@ var App = new Vue({
             body: [],
         },
         hasHeader: true,
+    },
+    watch: {
+        'hasHeader': function () {
+            App.convertToCsv();
+        },
     },
     methods: {
         convertToCsv: function () {
@@ -41,7 +42,7 @@ var App = new Vue({
                         if (allKeys.indexOf(key) < 0) allKeys.push(key);
                     }
                 }
-                allKeys.sort();
+                // allKeys.sort();
 
                 const keysStr = JSON.stringify(allKeys);
 
@@ -80,9 +81,59 @@ var App = new Vue({
             }
         },
         convertToJson: function () {
-            /**/console.log('convertToJson()');
+            // App.csv.error = '';
+            // App.json.value = '';
+            // App.table.header = [];
+            // App.table.body = [];
+
+            // try {
+            //     const csvRows = App.csv.value.split('\n').map(function (a) {
+            //         return a.trim();
+            //     }).filter(function (a) {
+            //         return a != '';
+            //     }).map(function (a) {
+            //         a = '[' + a + ']';
+            //         a = JSON.parse(a);
+            //         return a;
+            //     });
+            //     console.log('csvRows', csvRows);
+
+            // } catch (e) {
+            //     // if (e === 1) App.json.error = 'O JSON precisa ser uma lista.';
+            //     // else
+            //     App.csv.error = 'JSON inválido.';
+            // }
         },
     },
 });
 
+App.json.value = `[
+  { "a": "A 1", "b": true, "c": "C 1", "f": "F 1" },
+  { "a": "A 2", "b": "B 2", "d": "D 2", "g": "G 2", "h": "H 2" },
+  { "a": "A 3", "b": 4, "e": "E 2", "f": "F 3", "h": "H 3", "i": "I 3" }
+]`;
 App.convertToCsv();
+
+// App.csv.value = `
+
+// [
+//   { "a": "A 1", "b": true, "c": "C 1", "f": "F 1" },
+
+//   { "a": "A 2", "b": "B 2", "d": "D 2", "g": "G 2", "h": "H 2" },
+
+//   { "a": "A 3", "b": 4, "e": "E 2", "f": "F 3", "h": "H 3", "i": "I 3" }
+// ]
+
+
+// `;
+
+// App.csv.value = `
+
+//     "a","b","c","f","d","g","h","e","i"
+//     "A 1","true","C 1","F 1","","","","",""
+//     "A 2","B 2","","","D 2","G 2","H 2","",""
+//     "A 3","4","","F 3","","","H 3","E 2","I 3"
+
+
+// `;
+// App.convertToJson();

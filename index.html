@@ -28,53 +28,72 @@
 
         <h1 class="text-4xl text-center mb-16 text-white">Conversor de JSON para CSV</h1>
 
-        <!-- <pre class="text-white">{{table}}</pre> -->
-
         <!-- card -->
-        <div class="bg-white rounded overflow-hidden shadow-lg p-4 mb-4">
-            <h2 class="text-xl text-center mb-4">JSON</h2>
+        <div class="bg-white rounded overflow-hidden shadow-lg mb-4">
+            <div class="p-4 rounded-t text-xl text-center">
+                <h2>JSON</h2>
+            </div>
 
-            <div class="form-group" :class="{'has-error': json.error}">
-                <textarea
-                    class="shadow appearance-none border rounded w-full h-32 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    v-model="json.value" :class="{'border-red-500 bg-red-200': json.error}"
-                    @keyup.prevent="convertToCsv()"></textarea>
-                <small class="text-red-500">{{json.error}}</small>
+            <div class="p-4">
+                <div class="form-group" :class="{'has-error': json.error}">
+                    <textarea
+                        class="shadow appearance-none border rounded w-full h-32 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        v-model="json.value" :class="{'border-red-500 bg-red-200': json.error}"
+                        @keyup.prevent="convertToCsv()"></textarea>
+                    <small class="text-red-500">{{json.error}}</small>
+                </div>
+            </div>
+
+            <div class="p-4 rounded-b bg-gray-300">
+                <label class="text-gray-700 font-bold">
+                    <input class="leading-tight" type="checkbox" v-model="hasHeader">
+                    <span class="text-sm">
+                        Cabeçalho na primeira linha
+                    </span>
+                </label>
             </div>
         </div>
         <!-- /card -->
 
         <!-- card -->
-        <div class="bg-white rounded overflow-hidden shadow-lg p-4 mb-4">
-            <h2 class="text-xl text-center mb-4">CSV</h2>
+        <div class="bg-white rounded overflow-hidden shadow-lg mb-4">
+            <div class="p-4 rounded-t text-xl text-center">
+                <h2>CSV</h2>
+            </div>
 
-            <div class="form-group" :class="{'has-error': csv.error}">
-                <textarea
-                    class="shadow appearance-none border rounded w-full h-32 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    v-model="csv.value" :class="{'border-red-500 bg-red-200': csv.error}"
-                    @keyup.prevent="convertToJson()" readonly></textarea>
-                <small class="text-red-500">{{csv.error}}</small>
+            <div class="p-4">
+                <div class="form-group" :class="{'has-error': csv.error}">
+                    <textarea
+                        class="shadow appearance-none border rounded w-full h-32 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        v-model="csv.value" :class="{'border-red-500 bg-red-200': csv.error}"
+                        @keyup.prevent="convertToJson()" readonly></textarea>
+                    <small class="text-red-500">{{csv.error}}</small>
+                </div>
             </div>
         </div>
         <!-- /card -->
 
         <!-- card -->
-        <div class="bg-white rounded overflow-hidden shadow-lg p-4 mb-4">
-            <h2 class="text-xl text-center mb-4">Tabela</h2>
+        <div class="bg-white rounded overflow-hidden shadow-lg mb-4">
+            <div class="p-4 rounded-t text-xl text-center">
+                <h2>Tabela</h2>
+            </div>
 
-            <div class="overflow-auto">
-                <table class="table-auto border w-full">
-                    <thead>
-                        <tr class="bg-gray-200">
-                            <th class="border px-4 py-2 text-left" v-for="header in table.header">{{header}}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(row, i) in table.body" :class="{'bg-gray-100': i % 2 == 1}">
-                            <td class="border px-4 py-2 text-left" v-for="col in row">{{col}}</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="p-4">
+                <div class="overflow-auto">
+                    <table class="table-auto border w-full">
+                        <thead v-if="hasHeader">
+                            <tr class="bg-gray-200">
+                                <th class="border px-4 py-2 text-left" v-for="header in table.header">{{header}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(row, i) in table.body" :class="{'bg-gray-100': i % 2 == 1}">
+                                <td class="border px-4 py-2 text-left" v-for="col in row">{{col}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <!-- /card -->
