@@ -1,3 +1,3 @@
 # Json2Csv
 
-Conversor para Números Binários
+Conversor Json para CSV e Tabela
